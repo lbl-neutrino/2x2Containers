@@ -1,0 +1,47 @@
+* What am I doing
+I'm using apptainer 1.1.5
+
+* The image we build upon
+~images/root_v6.14.06_pythia6.sif~ fetched from https://portal.nersc.gov/project/dune/data/2x2/images/2x2_sim_prod.sif. See https://github.com/wilkinson-nu/2x2_truth_studies .
+
+* Building it!
+#+begin_src bash
+rm -rf tmpdir; mkdir tmpdir
+export SINGULARITY_TMPDIR=$PWD/tmpdir
+sudo -E apptainer build images/genie.DUNEv1.1.sif genie.DUNEv1.1.def
+#+end_src
+- See https://apptainer.org/docs/user/latest/fakeroot.html re getting rid of sudo
+- The -E to sudo passes environment variables (e.g. SINGULARITY_TMPDIR)
+
+* Getting it to NERSC
+** Convert to Docker
+- https://github.com/singularityhub/singularity2docker
+- Replace the use of mktemp so we don't fill up tmpfs
+#+begin_src bash
+sudo -E singularity2docker/singularity2docker.sh -n sim2x2:genie_DUNEv1.1 2x2Containers/images/genie.DUNEv1.1.sif
+#+end_src
+** Uploading to Docker Hub
+https://jsta.github.io/r-docker-tutorial/04-Dockerhub.html
+#+begin_src bash
+sudo docker tag sim2x2:genie_DUNEv1.1 mjkramer/sim2x2:genie_DUNEv1.1
+sudo docker login --username=mjkramer
+sudo docker push mjkramer/sim2x2:genie_DUNEv1.1
+# docker tag local-image:tagname new-repo:tagname
+# docker push new-repo:tagname
+#+end_src
+** Pulling it into Shifter
+#+begin_src bash
+shifterimg pull docker:mjkramer/sim2x2:genie_DUNEv1.1
+#+end_src
+
+* Finding libraries / remotes
+- https://docs.mpcdf.mpg.de/bnb/211.html#notes-on-the-sylabs-cloud-endpoint
+- See ~/.apptainer/remote.yaml
+- OK, the sylabs cloud endpoint is timing out. If we need to rebuild the base (ROOT+pythia) image, we can try getting centos7 from dockerhub instead of the library.
+
+* Questions
+- Should we upgrade to LHAPDF 6? Perhaps not, see https://github.com/lauramunteanu/Generator/blob/master/data/evgen/pdfs/README.txt
+
+* Misc notes
+- Pass /bin/bash to shifter; otherwise you'll seemingly be running old-school sh, and ~source /environment~ will fail.
+- Better yet: shifter --image=mjkramer/sim2x2:genie_DUNEv1.1 /bin/bash --init-file /environment
