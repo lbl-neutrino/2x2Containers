@@ -13,17 +13,23 @@ sudo -E apptainer build images/genie.DUNEv1.1.sif genie.DUNEv1.1.def
 - See https://apptainer.org/docs/user/latest/fakeroot.html re getting rid of sudo
 - The -E to sudo passes environment variables (e.g. SINGULARITY_TMPDIR)
 
+* Running it locally
+#+begin_src bash
+apptainer shell images/genie.DUNEv1.1.sif
+#+end_src
+
 * Getting it to NERSC
 ** Convert to Docker
 - https://github.com/singularityhub/singularity2docker
 - Replace the use of mktemp so we don't fill up tmpfs
+- ^ available in fork https://github.com/mjkramer/singularity2docker
 #+begin_src bash
-sudo -E singularity2docker/singularity2docker.sh -n sim2x2:genie_DUNEv1.1 2x2Containers/images/genie.DUNEv1.1.sif
+sudo -E singularity2docker/singularity2docker.sh -n mjkramer/sim2x2:genie_DUNEv1.1 2x2Containers/images/genie.DUNEv1.1.sif
 #+end_src
 ** Uploading to Docker Hub
 https://jsta.github.io/r-docker-tutorial/04-Dockerhub.html
 #+begin_src bash
-sudo docker tag sim2x2:genie_DUNEv1.1 mjkramer/sim2x2:genie_DUNEv1.1
+# sudo docker tag sim2x2:genie_DUNEv1.1 mjkramer/sim2x2:genie_DUNEv1.1
 sudo docker login --username=mjkramer
 sudo docker push mjkramer/sim2x2:genie_DUNEv1.1
 # docker tag local-image:tagname new-repo:tagname
@@ -45,3 +51,4 @@ shifterimg pull docker:mjkramer/sim2x2:genie_DUNEv1.1
 * Misc notes
 - Pass /bin/bash to shifter; otherwise you'll seemingly be running old-school sh, and ~source /environment~ will fail.
 - Better yet: shifter --image=mjkramer/sim2x2:genie_DUNEv1.1 /bin/bash --init-file /environment
+- For the GENIE + edep container, in the singularity2docker step, needed (temporarily) ~40 GB of disk space on my laptop!
