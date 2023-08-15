@@ -7,7 +7,7 @@ I'm using apptainer 1.1.5
 * Building it!
 #+begin_src bash
 rm -rf tmpdir; mkdir tmpdir
-export SINGULARITY_TMPDIR=$PWD/tmpdir
+export APPTAINER_TMPDIR=$PWD/tmpdir
 sudo -E apptainer build images/genie.DUNEv1.1.sif genie.DUNEv1.1.def
 #+end_src
 - See https://apptainer.org/docs/user/latest/fakeroot.html re getting rid of sudo
