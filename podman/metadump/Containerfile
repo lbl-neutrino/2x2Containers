@@ -1,0 +1,7 @@
+# podman-hpc build -t mjkramer/2x2_sim:metadump.v0 .
+FROM rootproject/root:6.28.04-ubuntu22.04
+
+COPY build_metadump.sh /opt
+RUN /opt/build_metadump.sh
+
+ENV LIBTG4EVENT_DIR=/opt/libTG4Event
