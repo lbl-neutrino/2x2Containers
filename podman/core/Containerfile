@@ -1,0 +1,22 @@
+# podman-hpc build -t mjkramer/2x2_sim:core000 .
+FROM mjkramer/2x2_sim:base000
+
+ENV GEN_DIR=/opt/generators
+ENV GENIE_VERSION=R-3_04_00
+ENV GENIE=${GEN_DIR}/GENIE/${GENIE_VERSION}
+ENV LHAPATH=${GEN_DIR}/LHAPDF/lhapdf-5.9.1_build/include/LHAPDF
+ENV PYTHIA6=${GEN_DIR}/root/lib
+ENV GSL_LIB=/usr/lib64
+ENV GSL_INC=/usr/include
+ENV LHAPDF_INC=${GEN_DIR}/LHAPDF/lhapdf-5.9.1_build/include
+ENV LHAPDF_LIB=${GEN_DIR}/LHAPDF/lhapdf-5.9.1_build/lib
+ENV LIBXML2_INC=/usr/include/libxml2
+ENV LIBXML2_LIB=/usr/lib64
+ENV DK2NU=${GEN_DIR}/dk2nu
+ENV LIBXML2INC=/usr/include/libxml2
+ENV PATH=$GENIE/bin:${PATH}
+ENV LD_LIBRARY_PATH=$LIBXML2_LIB:$LHAPDF_LIB:$PYTHIA6:$GENIE/lib:$LD_LIBRARY_PATH
+
+RUN mkdir -p /build
+COPY core.build.sh /build
+RUN /build/core.build.sh

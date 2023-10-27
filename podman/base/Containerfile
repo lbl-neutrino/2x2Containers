@@ -1,0 +1,7 @@
+# podman-hpc build -t mjkramer/2x2_sim:base000 .
+FROM fedora:39
+
+RUN mkdir /build
+
+COPY base.build.sh /build
+RUN /build/base.build.sh
