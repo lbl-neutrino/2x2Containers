@@ -5,7 +5,7 @@
 
 set -o errexit
 
-export NCORES=${NCORES:-16}
+export NCORES=${NCORES:-32}
 echo "Using $NCORES cores"
 
 ## Create working directory
@@ -159,4 +159,10 @@ cmake -DCMAKE_INSTALL_PREFIX=../install \
 # include cstdint
 make -j${NCORES} && make install
 
-echo "source $GEN_DIR/root/install/bin/thisroot.sh" >> ~/.bashrc
+# ???... https://geant4-forum.web.cern.ch/t/cmake-error-with-example/2057/2
+evilfile=$GEN_DIR/geant4/install/lib64/Geant4-${GEANT4_VERSION}/Geant4PackageCache.cmake
+sed -i 's/EXPAT_LIBRARY ""  ""/EXPAT_LIBRARY "" STRING ""/' $evilfile
+
+# neither bash_profile nor bashrc seem to work for e.g. building the edepsim container
+echo "source $GEN_DIR/root/install/bin/thisroot.sh" >> ~/.bash_profile
+echo "source $GEN_DIR/geant4/install/bin/geant4.sh" >> ~/.bash_profile

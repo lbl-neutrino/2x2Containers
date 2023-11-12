@@ -1,5 +1,7 @@
 #!/usr/bin/env bash
 
+set -o errexit
+
 dnf -y upgrade
 
 dnf -y install file
@@ -53,6 +55,10 @@ dnf -y install python3-devel
 dnf -y install xerces-c xerces-c-devel expat-devel
 
 ln -s /usr/bin/python3 /usr/bin/python
+
+# profiling tools
+
+# dnf -y install dbus-x11 graphviz kcachegrind
 
 # disable the default "-i" aliases which require confirmation
 
