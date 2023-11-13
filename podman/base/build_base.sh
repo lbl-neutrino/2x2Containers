@@ -7,6 +7,9 @@ set -o errexit
 
 dnf -y upgrade
 
+## For adding repos:
+dnf -y install 'dnf-command(config-manager)'
+
 dnf -y install file
 dnf -y install tar
 dnf -y install bzip2
@@ -58,6 +61,11 @@ dnf -y install python3-devel
 dnf -y install xerces-c xerces-c-devel expat-devel
 
 ln -s /usr/bin/python3 /usr/bin/python
+
+# Create a virtual environment
+python -m venv /opt/venv
+source /opt/venv/bin/activate
+pip install --upgrade pip setuptools wheel
 
 # profiling tools
 # dnf -y install dbus-x11 graphviz kcachegrind

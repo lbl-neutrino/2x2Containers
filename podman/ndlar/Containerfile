@@ -1,0 +1,16 @@
+# podman-hpc build -t mjkramer/2x2_sim:ndlar009 .
+FROM mjkramer/2x2_sim:cuda009
+
+RUN mkdir -p /build
+WORKDIR /build
+COPY *.sh .
+COPY flow_inputs .
+
+# RUN cat ndlar.env.sh >> /environment
+
+# RUN ./prep_ndlar.sh
+RUN ./build_sim.sh
+RUN ./build_flow.sh
+
+WORKDIR /
+RUN rm -rf /build

@@ -1,19 +1,20 @@
-# podman-hpc build -t mjkramer/2x2_sim:base007 .
-FROM fedora:39
+# podman-hpc build -t mjkramer/2x2_sim:base009 .
+FROM fedora:37
 
 RUN mkdir -p /build
 WORKDIR /build
 COPY *.sh .
 
-# Interactive shells load env via /etc/bashrc
-# Login shells load env via /etc/profile
-# Non-login non-interactive shells need BASH_ENV
-# (e.g. for podman run some_script.sh)
+RUN ./build_base.sh
+
+# Interactive shells load our env via /etc/bashrc,
+# login shells load our env via /etc/profile,
+# in both cases via /etc/profile.d/zzz.load_env.sh.
+# For non-login non-interactive shells we set BASH_ENV
+# (e.g. podman run some_script.sh)
 ENV BASH_ENV=/etc/profile.d/zzz.load_env.sh
 RUN mv load_env.sh $BASH_ENV
-RUN touch /environment
-
-RUN ./build_base.sh
+RUN mv base.env.sh /environment
 
 WORKDIR /
 RUN rm -rf /build

@@ -1,0 +1,11 @@
+# podman-hpc build -t mjkramer/2x2_sim:cuda009 .
+FROM mjkramer/2x2_sim:edepsim009
+
+RUN mkdir -p /build
+WORKDIR /build
+COPY *.sh .
+
+RUN ./install_cuda.sh
+
+WORKDIR /
+RUN rm -rf /build
