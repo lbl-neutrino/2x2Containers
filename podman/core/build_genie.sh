@@ -2,22 +2,24 @@
 
 source common.inc.sh
 
-cd /build
+## GENIE seems to prefer it if the source code is kept around.
+## So we build directly in $GEN_DIR and keep it all around.
+# cd /build
 
-git clone -b "$GENIE_VERSION" https://github.com/GENIE-MC/Generator.git
-cd Generator
+git clone -b "$GENIE_VERSION" https://github.com/GENIE-MC/Generator.git "$GENIE"
+cd "$GENIE"
 sed -i 's/g77/gfortran/g' src/make/Make.include
 
 ## Need to copy a file from GENIE into LHAPDF... pretty mad!
 cp data/evgen/pdfs/GRV98lo_patched.LHgrid "$LHAPATH"
 
-# The configure script expects GENIE to point to the _source_
-# But our convention is that it points to the install
-genieInstall=$GENIE
-export GENIE=$PWD
-
+## The configure script expects GENIE to point to the _source_
+## But our convention is that it points to the install
+# genieInstall=$GENIE
+# export GENIE=$PWD
+# ./configure \
+#   --prefix="$genieInstall" \
 ./configure \
-  --prefix="$genieInstall" \
   --enable-fnal \
   --with-pythia6-lib="$PYTHIA6" \
   --with-lhapdf-inc="$LHAPDF_INC" \
@@ -27,11 +29,11 @@ export GENIE=$PWD
 
 make -j "$NCORES" && make install
 
-export GENIE=$genieInstall
+# export GENIE=$genieInstall
 
-# fun
-mv config data VERSION $GENIE
-ln -s $GENIE/include/* /usr/include
+## fun (needed if we build in /build)
+# mv config data VERSION $GENIE
+# ln -s $GENIE/include/* /usr/include
 
 ## Shut GENIE up when it runs
 cp "$GENIE"/config/Messenger_whisper.xml "$GENIE"/config/Messenger.xml
