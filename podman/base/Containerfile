@@ -2,6 +2,31 @@
 FROM fedora:39
 
 RUN mkdir -p /build
-COPY base.build.sh /build
-RUN /build/base.build.sh
+WORKDIR /build
+COPY *.sh .
+
+# Interactive shells load env via /etc/bashrc
+# Login shells load env via /etc/profile
+# Non-login non-interactive shells need BASH_ENV
+# (e.g. for podman run some_script.sh)
+ENV BASH_ENV=/etc/profile.d/zzz.load_env.sh
+RUN mv load_env.sh $BASH_ENV
+RUN touch /environment
+
+RUN ./build_base.sh
+
+WORKDIR /
 RUN rm -rf /build
+
+## Use a login shell to ensure that /etc/profile gets read
+## Nevermind, if we put env var stuff in /etc/profile.d/something.sh
+## it will get loaded by /etc/bashrc even in a non-login shell.
+## Note that /etc/profile.d/sh.local will NOT work
+## (thisroot.sh / geant4.sh might get run multiple times but OK)
+## Nvm nvm now we are doing BASH_ENV=/environment
+# ENTRYPOINT ["/bin/bash", "-l"]
+
+# TODO set BASH_ENV=/environment here instead of in the core image?
+
+# TODO set BASH_ENV=/load_env.sh where we load /environment and then unset BASH_ENV
+# This should ensure we don't double-load?

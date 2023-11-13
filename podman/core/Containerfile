@@ -2,6 +2,17 @@
 FROM mjkramer/2x2_sim:base007
 
 RUN mkdir -p /build
-COPY core.build.sh core.env.sh /build
-RUN /build/core.build.sh
+WORKDIR /build
+COPY *.sh .
+
+RUN cat core.env.sh >> /environment
+
+RUN ./build_pythia6.sh
+RUN ./build_root.sh
+RUN ./build_lhapdf.sh
+RUN ./build_genie.sh
+RUN ./build_dk2nu.sh
+RUN ./build_geant4.sh
+
+WORKDIR /
 RUN rm -rf /build

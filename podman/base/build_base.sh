@@ -2,6 +2,9 @@
 
 set -o errexit
 
+# dnf config-manager --save --setopt=fastestmirror=True
+# https://old.reddit.com/r/Fedora/comments/vdgmeq/how_to_deal_with_terrible_dnf_mirror_selection
+
 dnf -y upgrade
 
 dnf -y install file
@@ -60,4 +63,4 @@ ln -s /usr/bin/python3 /usr/bin/python
 # dnf -y install dbus-x11 graphviz kcachegrind
 
 # disable the default "-i" aliases which require confirmation
-echo "unalias rm cp mv" >> /root/.bashrc
+# echo "unalias rm cp mv" >> /root/.bashrc
