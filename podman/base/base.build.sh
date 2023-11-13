@@ -57,9 +57,7 @@ dnf -y install xerces-c xerces-c-devel expat-devel
 ln -s /usr/bin/python3 /usr/bin/python
 
 # profiling tools
-
 # dnf -y install dbus-x11 graphviz kcachegrind
 
 # disable the default "-i" aliases which require confirmation
-
-echo "unalias rm cp mv" >> ~/.bashrc
+echo "unalias rm cp mv" >> /root/.bashrc
