@@ -22,6 +22,6 @@ export LIBXML2_LIB=/usr/lib64
 
 export DK2NU="$GEN_DIR"/dk2nu
 
-export PATH="$GENIESYS"/bin:"$PATH"
+export PATH="$GENIE"/bin:"$PATH"
 export LD_LIBRARY_PATH="$DK2NU"/lib:"$LIBXML2_LIB":"$LHAPDF_LIB":"$PYTHIA6":"$GENIE"/lib:"$LD_LIBRARY_PATH"
 export CMAKE_PREFIX_PATH="$GEN_DIR"/geant4/lib64/Geant4-"$GEANT4_VERSION":"$CMAKE_PREFIX_PATH"

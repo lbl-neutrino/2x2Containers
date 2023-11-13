@@ -29,8 +29,9 @@ make -j "$NCORES" && make install
 
 export GENIE=$genieInstall
 
-# y no get install
+# fun
 mv config data VERSION $GENIE
+ln -s $GENIE/include/* /usr/include
 
 ## Shut GENIE up when it runs
 cp "$GENIE"/config/Messenger_whisper.xml "$GENIE"/config/Messenger.xml
