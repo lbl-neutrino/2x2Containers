@@ -4,7 +4,7 @@ FROM mjkramer/2x2_sim:cuda009
 RUN mkdir -p /build
 WORKDIR /build
 COPY *.sh .
-COPY flow_inputs .
+COPY flow_inputs flow_inputs
 
 # RUN cat ndlar.env.sh >> /environment
 
