@@ -17,7 +17,8 @@ cd /build
 git clone https://github.com/lbl-neutrino/edep-sim.git
 cd edep-sim
 # git checkout c7dfcbbffa21933651c82c7c50cb418292f60fb3
-git checkout 5fc8fd17be46a64e36e18c535d82c382d2f19c75
+# git checkout 5fc8fd17be46a64e36e18c535d82c382d2f19c75
+git checkout 7e827cf7e65a77e2a3de6baf3e32a14aeed8116b
 cd build
 cmake -DCMAKE_INSTALL_PREFIX="$EDEPSIM" ../
 make -j "$NCORES" install
