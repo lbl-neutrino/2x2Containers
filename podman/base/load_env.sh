@@ -6,4 +6,4 @@
 # Prevent infinite recursion
 unset BASH_ENV
 
-source /environment
+source /opt/environment

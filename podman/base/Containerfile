@@ -1,4 +1,4 @@
-# podman-hpc build -t mjkramer/2x2_sim:base009 .
+# podman-hpc build -t mjkramer/2x2_sim:base011 .
 FROM fedora:37
 
 RUN mkdir -p /build
@@ -14,20 +14,7 @@ RUN ./build_base.sh
 # (e.g. podman run some_script.sh)
 ENV BASH_ENV=/etc/profile.d/zzz.load_env.sh
 RUN mv load_env.sh $BASH_ENV
-RUN mv base.env.sh /environment
+RUN mv base.env.sh /opt/environment
 
 WORKDIR /
 RUN rm -rf /build
-
-## Use a login shell to ensure that /etc/profile gets read
-## Nevermind, if we put env var stuff in /etc/profile.d/something.sh
-## it will get loaded by /etc/bashrc even in a non-login shell.
-## Note that /etc/profile.d/sh.local will NOT work
-## (thisroot.sh / geant4.sh might get run multiple times but OK)
-## Nvm nvm now we are doing BASH_ENV=/environment
-# ENTRYPOINT ["/bin/bash", "-l"]
-
-# TODO set BASH_ENV=/environment here instead of in the core image?
-
-# TODO set BASH_ENV=/load_env.sh where we load /environment and then unset BASH_ENV
-# This should ensure we don't double-load?

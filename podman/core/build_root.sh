@@ -51,7 +51,7 @@ cmake \
 
 make -j "$NCORES" install
 
-echo 'source "$GEN_DIR"/root/bin/thisroot.sh' >> /environment
+echo 'source "$GEN_DIR"/root/bin/thisroot.sh' >> /opt/environment
 
 # cleanup before snapshot
 cd /build

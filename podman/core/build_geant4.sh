@@ -25,4 +25,4 @@ make -j"$NCORES" install
 evilfile=$GEN_DIR/geant4/lib64/Geant4-${GEANT4_VERSION}/Geant4PackageCache.cmake
 sed -i 's/EXPAT_LIBRARY ""  ""/EXPAT_LIBRARY "" STRING ""/' "$evilfile"
 
-echo 'source "$GEN_DIR"/geant4/bin/geant4.sh' >> /environment
+echo 'source "$GEN_DIR"/geant4/bin/geant4.sh' >> /opt/environment

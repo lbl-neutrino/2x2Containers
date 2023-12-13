@@ -1,11 +1,11 @@
-# podman-hpc build -t mjkramer/2x2_sim:edepsim010 .
-FROM mjkramer/2x2_sim:core009
+# podman-hpc build -t mjkramer/2x2_sim:edepsim011 .
+FROM mjkramer/2x2_sim:core011
 
 RUN mkdir -p /build
 WORKDIR /build
 COPY *.sh .
 
-RUN cat edepsim.env.sh >> /environment
+RUN cat edepsim.env.sh >> /opt/environment
 
 RUN ./build_edepsim.sh
 

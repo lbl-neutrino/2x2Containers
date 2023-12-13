@@ -1,11 +1,11 @@
-# podman-hpc build -t mjkramer/2x2_sim:core009 .
-FROM mjkramer/2x2_sim:base009
+# podman-hpc build -t mjkramer/2x2_sim:core011 .
+FROM mjkramer/2x2_sim:base011
 
 RUN mkdir -p /build
 WORKDIR /build
 COPY *.sh .
 
-RUN cat core.env.sh >> /environment
+RUN cat core.env.sh >> /opt/environment
 
 RUN ./build_pythia6.sh
 RUN ./build_root.sh
