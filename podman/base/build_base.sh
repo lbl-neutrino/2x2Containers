@@ -60,6 +60,8 @@ dnf -y install python3-devel
 ## Needed for G4:
 dnf -y install xerces-c xerces-c-devel expat-devel
 
+dnf install time
+
 ln -s /usr/bin/python3 /usr/bin/python
 
 # Create a virtual environment
