@@ -1,0 +1,14 @@
+# podman-hpc build -t mjkramer/sim2x2:ndlar012 .
+FROM mjkramer/sim2x2:ndlar011
+
+RUN mkdir -p /build
+WORKDIR /build
+COPY *.sh .
+
+RUN cat edepsim.env.just_dlp.sh >> /opt/environment
+
+RUN rm -rf /opt/generators/edep-sim
+RUN ./build_edepsim.sh
+
+WORKDIR /
+RUN rm -rf /build
