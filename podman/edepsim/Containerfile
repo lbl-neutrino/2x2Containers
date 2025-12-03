@@ -1,4 +1,4 @@
-# podman-hpc build -t mjkramer/2x2_sim:edepsim011 .
+# podman-hpc build -t mjkramer/2x2_sim:edepsim012 .
 FROM mjkramer/2x2_sim:core011
 
 RUN mkdir -p /build

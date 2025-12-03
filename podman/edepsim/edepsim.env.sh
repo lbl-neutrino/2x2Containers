@@ -11,3 +11,8 @@ export CPATH=$EDEPSIM/include/EDepSim:$CPATH
 # See comments in 2x2_sim's run_spill_build.sh
 # Also useful for 2x2_sim's admin/dump_metadata.py
 export LIBTG4EVENT_DIR="$GEN_DIR"/libTG4Event
+
+# MPV/MPR "particle bomb" generator for SPINE training samples
+export DLPGENERATOR_INCDIR=$GEN_DIR/DLPGenerator/build/include
+export DLPGENERATOR_LIBDIR=$GEN_DIR/DLPGenerator/build/lib
+export LD_LIBRARY_PATH=$DLPGENERATOR_LIBDIR:$LD_LIBRARY_PATH
