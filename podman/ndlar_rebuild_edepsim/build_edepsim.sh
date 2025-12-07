@@ -8,9 +8,9 @@ echo "Using $NCORES cores"
 ## build standalone libTG4Event first
 cd /build
 prod=MiniRun5_1E19_RHC
-edepfile=$prod.spill.00123.EDEPSIM_SPILLS.root
+edepfile=$prod.spill.0000123.EDEPSIM_SPILLS.root
 baseUrl=https://portal.nersc.gov/project/dune/data/2x2/simulation/productions
-wget -q $baseUrl/$prod/$prod.spill/EDEPSIM_SPILLS/$edepfile
+wget -q $baseUrl/$prod/$prod.spill/EDEPSIM_SPILLS/0000000/$edepfile
 code="_file0->MakeProject(\"$GEN_DIR/libTG4Event\", \"*\", \"RECREATE++\")"
 root -l -b -q "$edepfile" -e "$code"
 rm $edepfile
@@ -22,7 +22,7 @@ cd yaml-cpp
 git checkout 0.8.0
 mkdir build
 cd build
-cmake -DCMAKE_INSTALL_PREFIX="$EDEPSIM" ../
+cmake -DCMAKE_INSTALL_PREFIX="$EDEPSIM" -DYAML_BUILD_SHARED_LIBS=ON ../
 make -j "$NCORES" install
 
 ## build the MPV/MPR generator itself (in-place)
@@ -39,5 +39,5 @@ git clone https://github.com/DUNE/edep-sim.git
 cd edep-sim
 git checkout f3a96fc7dd84440f837959c106984733507281e5
 cd build
-cmake -DCMAKE_INSTALL_PREFIX="$EDEPSIM" ../
+cmake -DCMAKE_INSTALL_PREFIX="$EDEPSIM" -DCMAKE_LIBRARY_PATH="$EDEPSIM/lib64" ../
 make -j "$NCORES" install
