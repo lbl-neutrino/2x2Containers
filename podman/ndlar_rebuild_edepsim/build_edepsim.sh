@@ -39,5 +39,6 @@ git clone https://github.com/DUNE/edep-sim.git
 cd edep-sim
 git checkout f3a96fc7dd84440f837959c106984733507281e5
 cd build
-cmake -DCMAKE_INSTALL_PREFIX="$EDEPSIM" -DCMAKE_LIBRARY_PATH="$EDEPSIM/lib64" ../
+export LIBRARY_PATH="$EDEPSIM/lib64:$LIBRARY_PATH"
+cmake -DCMAKE_INSTALL_PREFIX="$EDEPSIM" ../
 make -j "$NCORES" install
